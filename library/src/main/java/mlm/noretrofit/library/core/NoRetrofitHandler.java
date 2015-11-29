@@ -27,7 +27,6 @@ public class NoRetrofitHandler implements InvocationHandler {
 
         RunTimeParser runTimeParser = Utils.getFromMethodCache(method);
 
-
         try{
             if(runTimeParser!=null){
                 return runTimeParser.invoke(baseUrl,args);

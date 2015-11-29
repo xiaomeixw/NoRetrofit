@@ -13,12 +13,27 @@ import java.lang.reflect.Method;
  */
 public class RunTimeParser {
 
+    private Method method;
+    private OkHttpClient okHttpClient;
+
 
     public RunTimeParser(Method method, OkHttpClient okHttpClient) {
+        this.method=method;
+        this.okHttpClient=okHttpClient;
+        //解析操作
+        parserRunTimeAnno();
+
+    }
+
+    private void parserRunTimeAnno() {
+        //TODO
+
 
     }
 
     public Object invoke(String baseUrl, Object[] args) {
+
+
         return null;
     }
 }
