@@ -10,4 +10,6 @@ package mlm.noretrofit.library.constans;
 public class Constant {
 
     public static final boolean DEBUG_SWITCH=true;
+
+    public static final String UTF_8="UTF-8";
 }

@@ -22,6 +22,16 @@ public class NoRetrofitHandler implements InvocationHandler {
     }
 
 
+    /**
+     * proxy表示下面2.3 通过 Proxy.newProxyInstance() 生成的代理类对象。
+     * method表示代理对象被调用的函数。
+     * args表示代理对象被调用的函数的参数。
+     * @param proxy
+     * @param method
+     * @param args
+     * @return
+     * @throws Throwable
+     */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
@@ -29,6 +39,7 @@ public class NoRetrofitHandler implements InvocationHandler {
 
         try{
             if(runTimeParser!=null){
+                //将
                 return runTimeParser.invoke(baseUrl,args);
             }else{
                 return method.invoke(this,args);

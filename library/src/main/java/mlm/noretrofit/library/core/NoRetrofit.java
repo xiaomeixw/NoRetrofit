@@ -5,11 +5,10 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.IllegalFormatException;
-import java.util.concurrent.ConcurrentHashMap;
 
 import mlm.noretrofit.library.anno.GET;
 import mlm.noretrofit.library.anno.POST;
+import mlm.noretrofit.library.log.RetrofitLog;
 import mlm.noretrofit.library.util.Utils;
 
 /**
@@ -30,6 +29,8 @@ public class NoRetrofit {
      */
     public static <T> T create(String apiEndpointUrl, Class<T> serviceClass) {
 
+        RetrofitLog.i("------Retrofit------");
+
         T service;
 
         //Service类必须是接口
@@ -47,7 +48,7 @@ public class NoRetrofit {
 
                 //动态代理去拿service类对象
                 service = (T) Proxy.newProxyInstance(serviceClass.getClassLoader(), new Class[]{serviceClass},
-                        new NoRetrofitHandler()
+                        new NoRetrofitHandler(apiEndpointUrl)
                 );
 
                 //存入Service-Map集合中

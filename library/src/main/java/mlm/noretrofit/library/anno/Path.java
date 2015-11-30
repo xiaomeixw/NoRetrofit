@@ -6,14 +6,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by xiongwei , An Android project Engineer.
- * Data : 2015-11-28  20:14
+ * Created by xiongwei,An Android project Engineer.
+ * Date:2015-11-30  17:45
+ * Base on Meilimei.com (PHP Service)
  * Describe:
- * Version : 1.0
- * Open Source ：NoRetrofit
+ *
+ *    @GET("/group/{id}/users")
+ *    List<User> groupList(@PATH("id") int groupId);
+ *
+ * Version:1.0
+ * Open source
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface QueryParams {
+public @interface Path {
+
     String value() default "";
 }
