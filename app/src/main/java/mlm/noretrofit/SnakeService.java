@@ -2,7 +2,12 @@ package mlm.noretrofit;
 
 import java.util.Map;
 
+import mlm.noretrofit.library.anno.Field;
 import mlm.noretrofit.library.anno.GET;
+import mlm.noretrofit.library.anno.Header;
+import mlm.noretrofit.library.anno.POST;
+import mlm.noretrofit.library.anno.Path;
+import mlm.noretrofit.library.anno.Query;
 import mlm.noretrofit.library.anno.QueryMap;
 import mlm.noretrofit.library.anno.RetrofitAPI;
 
@@ -18,7 +23,20 @@ import mlm.noretrofit.library.anno.RetrofitAPI;
 public interface SnakeService {
 
 
-    @GET("/weather")
-    Bean getBean(@QueryMap Map<String, String> coordinates);
+    @GET("/tehui/getNewTehuiDetailById")
+    JsonBean<Bean> getBean(@QueryMap Map<String, String> coordinates);
 
+    @GET("/user/{id}")
+    String getUser(@Path("id") String id);
+
+    @POST("/user/signin")
+    UserInfo getLogin(@Field("username") String username, @Field("password") String password);
+
+
+    @GET("/tehui/getNewTehuiDetailById")
+    JsonBean<Bean> getHeader(@QueryMap Map<String, String> coordinates,@Header("Content-Type") String head);
+
+
+    @GET("/tehui/getNewTehuiDetailById")
+    JsonBean<Bean> getQuery(@Query("t_id") String t_id,@Query("signapp") String sign_app);
 }

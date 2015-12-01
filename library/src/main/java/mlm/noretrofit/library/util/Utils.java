@@ -1,6 +1,11 @@
 package mlm.noretrofit.library.util;
 
+import org.apache.http.NameValuePair;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import mlm.noretrofit.library.anno.RetrofitAPI;
@@ -93,5 +98,29 @@ public class Utils {
         return cacheMethodServices.get(method);
     }
 
+    /**
+     * 将@GET的map转成get请求的URL地址的拼接
+     * ?t_id=2500&signapp=893F86E4DC4CE0905628AECFBF8F1D2F
+     * @param queryParams
+     * @return
+     */
+    public static String linkQueryMapParam(List<NameValuePair> queryParams) {
+        String url="";
+        if (queryParams != null) {
+            url += "?";
+            for(int i= 0 ; i < queryParams.size();i++){
+                try {
+                    url += (queryParams.get(i).getName() + "=" + getEncodeString(queryParams.get(i).getValue()) + "&");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+            url = url.substring(0, url.length() - 1);
+        }
+        return url;
+    }
 
+    private static String getEncodeString(String content) throws UnsupportedEncodingException {
+        return content == null ? null : URLEncoder.encode(content, "UTF-8");
+    }
 }

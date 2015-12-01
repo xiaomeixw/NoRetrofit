@@ -39,17 +39,25 @@ public class NoRetrofit {
         //Service类上必须有注解@RetrofitAPI标记
         boolean mWithRetrofitMark = Utils.checkHaveRetrofitAPI(serviceClass);
 
+        RetrofitLog.i("------service--mWithRetrofitMark----="+mWithRetrofitMark);
+
         if (mWithRetrofitMark) {
 
             //先从缓存中取,key是service的name
             service = Utils.getFromCache(serviceClass.getName());
 
-            if (service != null) {
+            RetrofitLog.i("------service--getFromCache----="+service);
+
+            //TODO 一不小心写成!=null,How stupid I AM!
+            if (service == null) {
+
 
                 //动态代理去拿service类对象
                 service = (T) Proxy.newProxyInstance(serviceClass.getClassLoader(), new Class[]{serviceClass},
                         new NoRetrofitHandler(apiEndpointUrl)
                 );
+
+
 
                 //存入Service-Map集合中
                 T found = Utils.putInCache(serviceClass.getName(), service);
@@ -67,8 +75,10 @@ public class NoRetrofit {
 
         } else {
             throw new IllegalArgumentException("need use @RetrofitAPI Mark service");
-
         }
+
+
+        RetrofitLog.i("------service------"+service);
 
         return service;
 
@@ -77,6 +87,10 @@ public class NoRetrofit {
 
     private static void setMethodDataCache(Class serviceClass, OkHttpClient okHttpClient) {
         for(Method method : serviceClass.getMethods()){
+
+            //public abstract mlm.noretrofit.JsonBean mlm.noretrofit.SnakeService.getBean2(java.util.Map,java.util.Map,java.util.Map)
+            RetrofitLog.i("mMethod.setMethodDataCache()="+method);
+
             //有@GET和@POST
             if(method.isAnnotationPresent(GET.class)||method.isAnnotationPresent(POST.class)){
                 Utils.putInMethodCache(method,new RunTimeParser(method,okHttpClient));

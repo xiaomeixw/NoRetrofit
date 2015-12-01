@@ -63,4 +63,15 @@ public class JsonParser<T> {
     }
 
 
+    public T parse(String json) throws JsonConversionException {
+        try {
+            return gson.fromJson(json, responseType);
+        } catch (JsonIOException e) {
+            throw new JsonConversionException(e);
+        }  catch (JsonSyntaxException e) {
+            throw new JsonConversionException(e);
+        }
+    }
+
+
 }
